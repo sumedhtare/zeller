@@ -11,7 +11,7 @@ const User = ({data}: UserType) => {
   return (
     <TouchableOpacity style={styles.userContainer}>
       <View style={styles.userAvatar}>
-        <Text style={styles.userAvatarName}>{data.name.split("")[0]}</Text>
+        <Text style={styles.userAvatarName}>{data.name.split('')[0]}</Text>
       </View>
       <View>
       <Text style={styles.userName}>{data.name}</Text>
