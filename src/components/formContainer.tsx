@@ -16,12 +16,12 @@ export default function FormContainer({children}: FormContainerType) {
       <View className="flex-row justify-around w-full absolute">
         <Animated.Image
           entering={FadeInUp.delay(200).duration(1000).springify().damping(3)}
-          source={require('../../assets/images/light.png')}
+          source={require('../../assets/images/h-light.png')}
           className="h-[225] w-[90]"
         />
         <Animated.Image
           entering={FadeInUp.delay(400).duration(1000).springify().damping(3)}
-          source={require('../../assets/images/light.png')}
+          source={require('../../assets/images/h-light.png')}
           className="h-[160] w-[65]"
         />
       </View>

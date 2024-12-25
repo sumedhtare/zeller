@@ -11,6 +11,10 @@ export default function LoginScreen() {
   const navigateSignup = () => {
     navigation.navigate('signUp');
   };
+
+  const handleLogin = () => {
+    navigation.navigate('home');
+  };
   return (
     <FormContainer>
       <View className="h-full w-full justify-around pt-40 pb-10">
@@ -32,7 +36,7 @@ export default function LoginScreen() {
           />
 
           <View className="w-full">
-            <Button label="Login" />
+            <Button label="Login" onPress={handleLogin} />
           </View>
 
           <View className="flex-row jsutify-center">

@@ -15,7 +15,7 @@ export default function Button({
 }: CustomButtonProps) {
   return (
     <TouchableOpacity
-      className={`"w-full bg-sky-400 rounded-2xl mb-3 h-[50] flex justify-center ${containerClass}`}
+      className={`"w-full bg-sky-500 rounded-2xl mb-3 h-[50] flex justify-center ${containerClass}`}
       {...props}>
       <Text className={`text-xl font-bold text-white text-center ${textClass}`}>
         {label}
