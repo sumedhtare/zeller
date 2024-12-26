@@ -1,4 +1,11 @@
-import {Text, ScrollView, Dimensions, StyleSheet} from 'react-native';
+import {
+  Text,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  Pressable,
+  Image,
+} from 'react-native';
 import React from 'react';
 import Animated, {
   interpolateColor,
@@ -6,7 +13,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {Pressable} from 'react-native-gesture-handler';
+import {deviceNames, DeviceName, getDeviceImage} from '../utils/resources';
 
 const {width} = Dimensions.get('screen');
 
@@ -15,18 +22,19 @@ export default function FrequentyUsed() {
     <>
       <Text className="px-[10]">Frequenty used</Text>
       <ScrollView horizontal className="mt-2 pb-2">
-        <Actions />
-        <Actions />
-        <Actions />
-        <Actions />
-        <Actions />
-        <Actions />
+        {deviceNames.map((name, index) => (
+          <Actions key={index} name={name} />
+        ))}
       </ScrollView>
     </>
   );
 }
 
-function Actions() {
+type ActionsProps = {
+  name: DeviceName;
+};
+
+function Actions({name}: ActionsProps) {
   const progress = useSharedValue(0);
 
   const handlePress = () => {
@@ -48,21 +56,11 @@ function Actions() {
     };
   });
 
-  // const animatedBulb = useAnimatedStyle(() => {
-  //   const backgroundColor = interpolateColor(
-  //     progress.value,
-  //     [0, 1],
-  //     ['#000', '#0370CE'],
-  //   );
-
-  //   return {tintColor: backgroundColor};
-  // });
-
   return (
     <Pressable onPress={handlePress} className="flex-column items-center">
       <Animated.View style={[styles.action, animatedStyle]}>
-        <Animated.Image
-          source={require('../../assets/images/light.png')}
+        <Image
+          source={getDeviceImage(name, 1)}
           style={[styles.device]}
           resizeMode="contain"
         />
@@ -90,8 +88,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    overflow: 'hidden',
   },
   device: {
-    width: '80%',
+    width: '100%',
+    height: '70%',
   },
 });

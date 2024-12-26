@@ -1,47 +1,21 @@
 import {
   Text,
-  ScrollView,
+  Pressable,
   Dimensions,
   StyleSheet,
   FlatList,
   View,
+  Image,
 } from 'react-native';
 import React from 'react';
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
-import {Pressable} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import {getRoomColor, getRoomImage, roomNames} from '../utils/resources';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('screen');
 
-const data = [
-  {
-    name: 'room1',
-    id: 1,
-  },
-  {
-    name: 'room2',
-    id: 2,
-  },
-  {
-    name: 'room3',
-    id: 3,
-  },
-  {
-    name: 'room4',
-    id: 4,
-  },
-  {
-    name: 'room5',
-    id: 5,
-  },
-];
-
 export default function Rooms() {
-  const renderItem = ({item}: any) => <Actions data={item} />;
+  const renderItem = ({item}: any) => <Room data={item} />;
 
   return (
     <View>
@@ -50,39 +24,42 @@ export default function Rooms() {
         className="mt-2"
         contentContainerClassName="flex-column items-center gap-2 pb-2 pt-1"
         style={styles.container}
-        data={data}
+        data={roomNames}
         renderItem={renderItem}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item}
       />
     </View>
   );
 }
 
-function Actions({data}: any) {
-  const progress = useSharedValue(0);
+function Room({data}: any) {
+  const navigation: any = useNavigation();
+  const colors = getRoomColor(data);
+  const image = getRoomImage(data);
 
   const handlePress = () => {
-    progress.value = withTiming(1, {duration: 500}, () => {
-      progress.value = withTiming(0, {duration: 500});
+    navigation.navigate('room', {
+      data,
     });
   };
-  const animatedStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      progress.value,
-      [0, 0.5, 1],
-      ['#000', '#f50505', '#1bd149'],
-    );
 
-    return {
-      shadowColor: backgroundColor,
-    };
-  });
   return (
     <Pressable onPress={handlePress}>
-      <Animated.View style={[styles.action, animatedStyle]}>
-        <Text className="px-[10]">{data?.name}</Text>
+      <LinearGradient
+        colors={colors.linear0}
+        style={[styles.action]}
+        start={{x: 0, y: 1}}
+        end={{x: 0, y: 0}}>
+        <LinearGradient
+          colors={colors.linear}
+          style={styles.imageBg}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+        />
+        <Image source={image} style={styles.image} resizeMode="contain" />
+        <Text className="px-[10]">{data}</Text>
         <Text className="px-[10]">3 Devices</Text>
-      </Animated.View>
+      </LinearGradient>
     </Pressable>
   );
 }
@@ -91,7 +68,6 @@ const styles = StyleSheet.create({
   action: {
     height: height * 0.14,
     width: width * 0.97,
-    backgroundColor: '#FFF',
     borderRadius: 4,
     display: 'flex',
     justifyContent: 'space-around',
@@ -102,7 +78,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
+    overflow: 'hidden',
     elevation: 5,
   },
   container: {
@@ -110,5 +86,21 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 1, // Ensures the FlatList fills the remaining height
+  },
+  image: {
+    height: '65%',
+    width: '40%',
+    position: 'absolute',
+    right: 0,
+    top: 10,
+  },
+  imageBg: {
+    position: 'absolute',
+    right: -43,
+    top: -80,
+    width: 210,
+    height: 210,
+    borderRadius: 210,
+    backgroundColor: 'red',
   },
 });

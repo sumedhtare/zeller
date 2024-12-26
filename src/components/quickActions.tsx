@@ -1,4 +1,10 @@
-import {Text, ScrollView, Dimensions, StyleSheet} from 'react-native';
+import {
+  Text,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
 import React from 'react';
 import Animated, {
   interpolateColor,
@@ -6,7 +12,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {Pressable} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('screen');
 
