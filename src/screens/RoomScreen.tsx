@@ -1,11 +1,11 @@
-import {View, StyleSheet, Image, Dimensions, StatusBar} from 'react-native';
+import {View, StyleSheet, Dimensions, StatusBar} from 'react-native';
 import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Button from '../components/button';
 import Animated, {FadeInUp} from 'react-native-reanimated';
 import {getRoomColor, getRoomImage} from '../utils/resources';
 import LinearGradient from 'react-native-linear-gradient';
-const {width, height} = Dimensions.get('screen');
+const {height} = Dimensions.get('screen');
 
 export default function RoomScreen() {
   const navigation = useNavigation();
